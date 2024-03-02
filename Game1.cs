@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -11,10 +12,14 @@ namespace Loops_and_Grids
 		private SpriteBatch _spriteBatch;
 
 		KeyboardState keyboardState;
+		MouseState mouseState;
 
 		Texture2D grassTexture;
 		Texture2D mowerTexture;
 		Rectangle mowerRect;
+
+		SoundEffect mowerSound;
+		SoundEffectInstance mowerSoundInstance;
 
 		Vector2 mowerSpeed;
 
@@ -41,8 +46,6 @@ namespace Loops_and_Grids
 				for (int j = 0; j < 600; j += 5)
 					grassTiles.Add(new Rectangle(i, j, 5, 5));
 			
-
-
 			base.Initialize();
 		}
 
@@ -53,6 +56,11 @@ namespace Loops_and_Grids
 			// TODO: use this.Content to load your game content here
 			grassTexture = Content.Load<Texture2D>("Images/long_grass");
 			mowerTexture = Content.Load<Texture2D>("Images/mower");
+
+			mowerSound = Content.Load<SoundEffect>("Sounds/mower_sound");
+			mowerSoundInstance = mowerSound.CreateInstance();
+			mowerSoundInstance.IsLooped = true;
+
 		}
 
 		protected override void Update(GameTime gameTime)
@@ -72,6 +80,11 @@ namespace Loops_and_Grids
 				mowerSpeed.X -= 1;
 			if (keyboardState.IsKeyDown(Keys.D))
 				mowerSpeed.X += 1;
+
+			if (mowerSpeed == Vector2.Zero)
+				mowerSoundInstance.Stop();
+			else
+				mowerSoundInstance.Play();
 
 			mowerRect.Offset(mowerSpeed);
 
