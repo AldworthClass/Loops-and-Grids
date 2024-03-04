@@ -12,18 +12,15 @@ namespace Loops_and_Grids
 		private SpriteBatch _spriteBatch;
 
 		KeyboardState keyboardState;
-		MouseState mouseState;
 
 		Texture2D grassTexture;
-		Texture2D mowerTexture;
-		Rectangle mowerRect;
+        List<Rectangle> grassTiles;
 
+        Texture2D mowerTexture;
+		Rectangle mowerRect;
 		SoundEffect mowerSound;
 		SoundEffectInstance mowerSoundInstance;
-
 		Vector2 mowerSpeed;
-
-		List<Rectangle> grassTiles;
 
 		public Game1()
 		{
@@ -36,14 +33,14 @@ namespace Loops_and_Grids
 		{
 			// TODO: Add your initialization logic here
 			_graphics.PreferredBackBufferWidth = 600;
-			_graphics.PreferredBackBufferHeight = 600;
+			_graphics.PreferredBackBufferHeight = 500;
 			_graphics.ApplyChanges();
 
 			grassTiles = new List<Rectangle>();
 			mowerRect = new Rectangle(100, 100, 30, 30);
 
-			for (int i = 0; i < 600; i += 5)
-				for (int j = 0; j < 600; j += 5)
+			for (int i = 0; i < 600; i += 5) // generates x coordinates
+				for (int j = 0; j < 500; j += 5) // generates y coordinates
 					grassTiles.Add(new Rectangle(i, j, 5, 5));
 			
 			base.Initialize();
@@ -93,7 +90,6 @@ namespace Loops_and_Grids
 				{
 					grassTiles.Remove(grassTiles[i]);
 					i--;
-
 				}
 
 
