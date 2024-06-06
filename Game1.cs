@@ -12,6 +12,7 @@ namespace Loops_and_Grids
 		private SpriteBatch _spriteBatch;
 
 		KeyboardState keyboardState;
+		Rectangle window;
 
 		Texture2D grassTexture;
         List<Rectangle> grassTiles;
@@ -32,15 +33,16 @@ namespace Loops_and_Grids
 		protected override void Initialize()
 		{
 			// TODO: Add your initialization logic here
-			_graphics.PreferredBackBufferWidth = 600;
-			_graphics.PreferredBackBufferHeight = 500;
+			window = new Rectangle(0, 0, 600, 500);
+			_graphics.PreferredBackBufferWidth = window.Width;
+			_graphics.PreferredBackBufferHeight = window.Height;
 			_graphics.ApplyChanges();
 
 			grassTiles = new List<Rectangle>();
 			mowerRect = new Rectangle(100, 100, 30, 30);
 
-			for (int i = 0; i < 600; i += 5) // generates x coordinates
-				for (int j = 0; j < 500; j += 5) // generates y coordinates
+			for (int i = 0; i < window.Width; i += 5) // generates x coordinates
+				for (int j = 0; j < window.Height; j += 5) // generates y coordinates
 					grassTiles.Add(new Rectangle(i, j, 5, 5));
 			
 			base.Initialize();
@@ -56,7 +58,7 @@ namespace Loops_and_Grids
 
 			mowerSound = Content.Load<SoundEffect>("Sounds/mower_sound");
 			mowerSoundInstance = mowerSound.CreateInstance();
-			mowerSoundInstance.IsLooped = true;
+			mowerSoundInstance.IsLooped = true;		// Sound will play until we stop it
 
 		}
 
